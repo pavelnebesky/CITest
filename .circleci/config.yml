@@ -25,7 +25,7 @@ jobs:
             - ~/.gradle/caches
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - persist_to_workspace:
-          root: .
+          root: ./TribesBackend
           paths:
             - build
   test:
@@ -44,7 +44,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: .
+          at: ./TribesBackend
       - run:
           name: Run tests in parallel
           # Use "./gradlew test" instead if tests are not run in parallel
