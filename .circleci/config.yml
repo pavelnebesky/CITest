@@ -10,22 +10,22 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+          key: v1-gradle-wrapper-{{ checksum "TribesBackend/gradle/wrapper/gradle-wrapper.properties" }}
       - restore_cache:
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - run:
           name: Install dependencies
-          command: ./gradlew build -x test
+          command: ./TribesBackend/gradlew build -x test
       - save_cache:
           paths:
-            - ~/.gradle/wrapper
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - ~/TribesBackend/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "TribesBackend/gradle/wrapper/gradle-wrapper.properties" }}
       - save_cache:
           paths:
-            - ~/.gradle/caches
+            - ~/TribesBackend/.gradle/caches
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - persist_to_workspace:
-          root: .
+          root: ./TribesBackend
           paths:
             - build
   test:
@@ -44,19 +44,19 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: .
+          at: ./TribesBackend
       - run:
           name: Run tests in parallel
           # Use "./gradlew test" instead if tests are not run in parallel
           command: |
-            cd src/test/java
+            cd TribesBackend/src/test/java
             # Get list of classnames of tests that should run on this node
             CLASSNAMES=$(circleci tests glob "**/*.java" \
               | cut -c 1- | sed 's@/@.@g' \
               | sed 's/.\{5\}$//' \
               | circleci tests split --split-by=timings --timings-type=classname)
-            cd ../../..
-            # Format the arguments to "./gradlew test"
+            cd ../../../..
+            # Format the arguments to "./TribesBackend/gradlew test"
             GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
             echo "Prepared arguments for Gradle: $GRADLE_ARGS"
             ./gradlew test $GRADLE_ARGS
@@ -65,7 +65,7 @@ jobs:
           command: |
             # Skip this for other nodes
             if [ "$CIRCLE_NODE_INDEX" == 0 ]; then
-              ./gradlew assemble
+              ./TribesBackend/gradlew assemble
             fi
       # This will be empty for all nodes except the first one
       - store_artifacts:
