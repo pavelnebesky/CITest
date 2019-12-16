@@ -47,7 +47,6 @@ jobs:
           at: .
       - run:
           name: Run tests
-          # Use "./gradlew test" instead if tests are not run in parallel
           command: |
               cd TribesBackend
               ./gradlew test -i
