@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-publi class HomeController {
+public class HomeController {
 
     @GetMapping("/")
     @ResponseBody
