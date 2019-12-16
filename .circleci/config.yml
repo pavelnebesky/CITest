@@ -73,8 +73,6 @@ jobs:
       - run:
           name: Setup Heroku
           command: |  
-            ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
-            cat > ~/.netrc << EOF
             machine api.heroku.com
               login $HEROKU_LOGIN
               password $HEROKU_API_KEY
