@@ -21,7 +21,7 @@ jobs:
           name: build
           command: |
               cd TribesBackend
-              ./gradlew build
+              ./gradlew build -x test
       - save_cache:
           paths:
             - ~/TribesBackend/.gradle/wrapper
