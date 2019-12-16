@@ -17,6 +17,11 @@ jobs:
       - run:
           name: Install dependencies
           command: ./TribesBackend/gradlew dependencies
+      - run:
+          name: build
+          command: |
+              cd TribesBackend
+              ./gradlew build
       - save_cache:
           paths:
             - ~/TribesBackend/.gradle/wrapper
