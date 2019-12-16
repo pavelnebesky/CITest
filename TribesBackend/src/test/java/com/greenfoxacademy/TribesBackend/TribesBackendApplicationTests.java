@@ -28,6 +28,6 @@ class TribesBackendApplicationTests {
 
     @Test
     public void serviceLoads() throws InstanceNotFoundException {
-        assertThat(userService).isNull();
+        assertThat(userService).isNotNull();
     }
 }
