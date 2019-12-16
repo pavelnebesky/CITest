@@ -10,10 +10,6 @@ jobs:
       - image: circleci/openjdk:11.0.3-jdk-stretch
     steps:
       - checkout
-      - restore_cache:
-          key: v1-gradle-wrapper-{{ checksum "TribesBackend/gradle/wrapper/gradle-wrapper.properties" }}
-      - restore_cache:
-          key: v1-gradle-cache-{{ checksum "TribesBackend/build.gradle" }}
       - run:
           name: Install dependencies
           command: ./TribesBackend/gradlew dependencies
@@ -22,18 +18,6 @@ jobs:
           command: |
               cd TribesBackend
               ./gradlew build -x test
-      - save_cache:
-          paths:
-            - ~/TribesBackend/.gradle/wrapper
-          key: v1-gradle-wrapper-{{ checksum "TribesBackend/gradle/wrapper/gradle-wrapper.properties" }}
-      - save_cache:
-          paths:
-            - ~/TribesBackend/.gradle/caches
-          key: v1-gradle-cache-{{ checksum "TribesBackend/build.gradle" }}
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
   tests:
     environment:
       # Configure the JVM and Gradle to avoid OOM errors
@@ -50,17 +34,6 @@ jobs:
           command: |
               cd TribesBackend
               ./gradlew test -i
-      - run:
-          name: Assemble JAR
-          command: |
-            # Skip this for other nodes
-            if [ "$CIRCLE_NODE_INDEX" == 0 ]; then
-              cd TribesBackend
-              ./gradlew assemble
-            fi
-      # This will be empty for all nodes except the first one
-      - store_artifacts:
-          path: TribesBackend/build/libs
   deploy:
     docker:
       - image: buildpack-deps:trusty
