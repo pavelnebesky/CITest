@@ -16,7 +16,7 @@ jobs:
           key: v1-gradle-cache-{{ checksum "TribesBackend/build.gradle" }}
       - run:
           name: Install dependencies
-          command: ./TribesBackend/gradlew build
+          command: ./TribesBackend/gradlew dependencies
       - save_cache:
           paths:
             - ~/TribesBackend/.gradle/wrapper
