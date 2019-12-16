@@ -22,12 +22,12 @@ class TribesBackendApplicationTests {
     private UserService userService;
 
     @Test
-    public void contexLoads() throws InstanceNotFoundException  {
+    public void contexLoads() throws InstanceNotFoundException {
         assertThat(homeController).isNotNull();
     }
 
     @Test
-    public void serviceLoads() throws InstanceNotFoundException  {
-        assertThat(userService).isNotNull();
+    public void serviceLoads() throws InstanceNotFoundException {
+        assertThat(userService).isNull();
     }
 }
