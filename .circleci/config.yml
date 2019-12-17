@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: build
+          name: Build
           command: |
               cd TribesBackend
               ./gradlew build -x test
@@ -23,8 +23,6 @@ jobs:
       - image: circleci/openjdk:11.0.3-jdk-stretch
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - run:
           name: Run tests
           command: |
@@ -36,7 +34,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Deploy Master to Heroku
+          name: Deploy master to Heroku
           command: |
             git subtree push --prefix TribesBackend https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 workflows:
