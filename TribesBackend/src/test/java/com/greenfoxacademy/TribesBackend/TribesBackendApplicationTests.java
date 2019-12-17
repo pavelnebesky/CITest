@@ -15,7 +15,6 @@ import javax.management.InstanceNotFoundException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class TribesBackendApplicationTests {
-
     
     @Autowired
     private HomeController homeController;
