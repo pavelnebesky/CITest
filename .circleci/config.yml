@@ -49,3 +49,7 @@ workflows:
         requires:
           - build
           - tests
+        filters:
+          branches:
+            only:
+              - master
