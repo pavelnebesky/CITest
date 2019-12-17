@@ -27,7 +27,7 @@ jobs:
           name: Run tests
           command: |
               cd TribesBackend
-              ./gradlew test -i
+              ./gradlew test
   deploy:
     docker:
       - image: buildpack-deps:trusty
