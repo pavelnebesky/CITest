@@ -10,9 +10,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies
-          command: ./TribesBackend/gradlew dependencies
-      - run:
           name: build
           command: |
               cd TribesBackend
